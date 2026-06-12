@@ -10,7 +10,35 @@ Web sürümünün **yatay (landscape) mobil** portu. Oyun **mantığı** (engine
 ile **paylaşılır**; burada sadece render/etkileşim/animasyon katmanı React Native'dir.
 (CLAUDE.md Aşama 9 mantığı: mantık taşınabilir, render yeniden yazılır.)
 
-## Çalıştırma
+## Windows'ta sıfırdan çalıştırma (en kolay yol)
+
+**Gerekenler:** Node.js LTS (https://nodejs.org), Git, ve telefonunda **Expo Go** uygulaması
+(App Store / Google Play). Telefon + PC **aynı Wi-Fi**'de olmalı.
+
+```powershell
+git clone https://github.com/onryzici/harf-destesi-game.git
+cd harf-destesi-game\mobile
+npm install        # bağımlılıklar (birkaç dk)
+npm start          # Metro başlar; prestart engine/data'yı mobile\shared'a kopyalar
+```
+
+Terminalde bir **QR kod** çıkar:
+- **iPhone:** Kamera ile QR'ı okut → Expo Go'da açılır. (Olmazsa Expo Go → "Enter URL manually" → terminaldeki `exp://...:8081`.)
+- **Android:** Expo Go → "Scan QR code" ile okut.
+
+Oyun yatay modda açılır → **OYNA**.
+
+> Aynı Wi-Fi yoksa: `npx expo start --tunnel` (biraz yavaş ama her ağda çalışır).
+> Android emülatör (Android Studio kuruluysa): `npm run android`.
+
+### Sorun giderme
+- **"incompatible with this version of Expo Go":** Telefondaki Expo Go'yu mağazadan güncelle.
+  Proje **SDK 55**; güncel Expo Go bunu destekler.
+- **Eski ekran / değişiklik gelmiyor:** Expo Go'yu tamamen kapat-aç ya da uygulamada
+  sallayıp **Reload**. Gerekirse Expo Go'yu silip yeniden kur (cihaz bundle önbelleği).
+- **`npm install` hatası:** Node.js LTS kurulu mu kontrol et; `mobile` klasöründe olduğundan emin ol.
+
+## Çalıştırma (özet — macOS/Linux/Windows)
 
 ```bash
 cd mobile
@@ -20,7 +48,7 @@ npm start            # Metro başlar (prestart → engine/data senkronu otomatik
 
 Sonra:
 - **Telefonda:** Expo Go uygulamasını kur, terminaldeki QR'ı okut.
-- **iOS simülatör:** `npm run ios`
+- **iOS simülatör (sadece macOS):** `npm run ios`
 - **Android emülatör:** `npm run android`
 
 > Cihaz **yatay** kilitlidir (`app.json` + `expo-screen-orientation`).

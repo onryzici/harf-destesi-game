@@ -1,9 +1,25 @@
-# Wordtro — Harf Destesi
+# Harf Destesi
 
-Türkçe kelime-roguelike (deckbuilder). *Kelimelik × Balatro.*
+Türkçe kelime-roguelike (deckbuilder). Harflerden kelime kur, skor avla.
 Tasarımın tam referansı: [`CLAUDE.md`](./CLAUDE.md).
 
-## Çalıştırma
+İki sürüm: **web** (kök, prototip) ve **mobil** (`mobile/`, React Native / Expo, yatay).
+
+## 📱 Mobil sürümü çalıştırma (Windows / Expo Go)
+
+Gerekenler: **Node.js LTS**, **Git**, telefonda **Expo Go** (telefon + PC aynı Wi-Fi).
+
+```bash
+git clone https://github.com/onryzici/harf-destesi-game.git
+cd harf-destesi-game/mobile
+npm install
+npm start
+```
+
+Çıkan **QR kodu** Expo Go ile okut → oyun yatay açılır. Ayrıntı + sorun giderme:
+[`mobile/README.md`](./mobile/README.md).
+
+## Web sürümünü çalıştırma
 
 ES modülleri ve sözlük `fetch` ile yüklendiği için tarayıcı `file://` üzerinden
 **çalışmaz** — küçük bir yerel sunucu gerekir (kurulum/build yok):
