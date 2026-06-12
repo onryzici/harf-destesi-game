@@ -1,0 +1,10 @@
+{
+  "name": "wordtro",
+  "version": "0.1.0",
+  "description": "Türkçe kelime-roguelike (deckbuilder). Kelimelik × Balatro.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "serve": "python3 -m http.server 8000"
+  }
+}

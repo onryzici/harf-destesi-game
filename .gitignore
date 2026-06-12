@@ -1,0 +1,24 @@
+# Bağımlılıklar
+node_modules/
+**/node_modules/
+
+# Expo / RN
+.expo/
+**/.expo/
+mobile/shared/        # ÜRETİLMİŞ ayna (kanonik: src/) — bkz. mobile/scripts/sync-shared.mjs
+dist/
+web-build/
+*.tsbuildinfo
+
+# iOS / Android yerel build (dev build yapılırsa)
+mobile/ios/
+mobile/android/
+
+# Sistem / editör
+.DS_Store
+*.log
+.idea/
+.vscode/
+
+# Geçici
+/tmp/

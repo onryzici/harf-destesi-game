@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wordtro</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- ── Sol bilgi paneli ── -->
+      <aside class="sidebar">
+        <div class="brand">WORDTRO<span class="brand__nib"></span></div>
+
+        <div class="blind-badge">
+          <div class="blind-badge__chip" id="blind-name">Tur 1</div>
+          <div class="blind-badge__req">
+            Hedef <span class="chip-dot"></span><strong id="blind-req">0</strong>
+          </div>
+        </div>
+
+        <div class="boss-info" id="boss-info" hidden></div>
+
+        <div class="panel panel--score">
+          <span class="panel__label">Tur skoru</span>
+          <span class="panel__big" id="round-score">0</span>
+        </div>
+
+        <div class="panel tier-box" id="tier-box">
+          <div class="tier-box__label" id="tier-label">Kelime kur</div>
+          <div class="tier-box__math">
+            <span class="pill pill--chips" id="chips">0</span>
+            <span class="pill__x">×</span>
+            <span class="pill pill--mult" id="mult">1</span>
+          </div>
+        </div>
+
+        <div class="counters">
+          <div class="counter"><span>Hak</span><strong id="plays">0</strong></div>
+          <div class="counter"><span>Değişim</span><strong id="discards">0</strong></div>
+        </div>
+
+        <div class="money" id="money">$0</div>
+
+        <div class="meta">
+          <div class="meta__cell"><span>Bölüm</span><strong id="ante">1/8</strong></div>
+          <div class="meta__cell"><span>Tur</span><strong id="round-num">1/3</strong></div>
+        </div>
+
+        <div class="sidebar__msg" id="message"></div>
+
+        <button class="btn-ghost" id="open-menu" type="button">☰ Menü</button>
+      </aside>
+
+      <!-- ── Masa ── -->
+      <main class="felt" id="felt">
+        <!-- Joker rafı (etiketli üst bar) -->
+        <div class="joker-rail">
+          <div class="rail-label">JOKERLER <em id="joker-count">0/5</em></div>
+          <div class="joker-shelf" id="joker-shelf"></div>
+        </div>
+
+        <!-- Kelime kurma alanı (manuskript şeridi) -->
+        <div class="stage">
+          <div class="stage__caption">KELİMENİ KUR</div>
+          <div class="play-area" id="board">
+            <div class="play-area__slots" id="board-slots"></div>
+            <div class="play-area__hint" id="board-hint">Harfleri buraya sürükle, kelimeni kur</div>
+          </div>
+        </div>
+
+        <!-- El (yelpaze) + deste -->
+        <div class="hand-row">
+          <div class="hand" id="hand"></div>
+          <div class="deck-pile">
+            <div class="deck-pile__card"></div>
+            <div class="deck-pile__count" id="deck-count">0/0</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn--play" id="play-btn" type="button">OYNA</button>
+          <button class="btn btn--discard" id="discard-btn" type="button">DEĞİŞTİR</button>
+          <button class="btn btn--clear" id="clear-btn" type="button">Temizle</button>
+        </div>
+
+        <!-- Uçan sayılar + kutlama yazısı (sıralı skor çözümü) -->
+        <div class="fx-layer" id="fx-layer"></div>
+      </main>
+    </div>
+
+    <!-- ── Dükkân ── -->
+    <div class="overlay shop-overlay" id="shop">
+      <div class="shop" id="shop-panel"></div>
+    </div>
+
+    <!-- ── Tur geçildi / kaybettin / kazandın ── -->
+    <div class="overlay" id="overlay">
+      <div class="overlay__box">
+        <h2 class="overlay__title" id="overlay-title"></h2>
+        <p class="overlay__text" id="overlay-text"></p>
+        <div class="run-stats" id="overlay-stats" hidden></div>
+        <button class="btn btn--play" id="overlay-btn" type="button"></button>
+      </div>
+    </div>
+
+    <!-- ── Ana menü ── -->
+    <div class="overlay menu-overlay overlay--show" id="menu">
+      <div class="menu__tiles" aria-hidden="true">
+        <span class="menu-tile" style="--x:6%;  --y:14%; --r:-9deg;  --dur:8s;  --d:0s">K</span>
+        <span class="menu-tile" style="--x:16%; --y:62%; --r:7deg;   --dur:10s; --d:.6s">E</span>
+        <span class="menu-tile" style="--x:27%; --y:24%; --r:-5deg;  --dur:9s;  --d:1.2s">L</span>
+        <span class="menu-tile" style="--x:84%; --y:18%; --r:8deg;   --dur:11s; --d:.3s">İ</span>
+        <span class="menu-tile" style="--x:90%; --y:58%; --r:-7deg;  --dur:8.5s;--d:1.5s">M</span>
+        <span class="menu-tile" style="--x:74%; --y:74%; --r:6deg;   --dur:10.5s;--d:.9s">E</span>
+        <span class="menu-tile" style="--x:10%; --y:84%; --r:5deg;   --dur:9.5s;--d:.4s">Ç</span>
+        <span class="menu-tile" style="--x:88%; --y:86%; --r:-8deg;  --dur:9s;  --d:1.1s">Z</span>
+      </div>
+      <div class="menu">
+        <div class="menu__brand">WORDTRO<span class="brand__nib"></span></div>
+        <div class="menu__tag">Harflerden kelime kur, skor avla. Her oyun yeni bir kombo motoru.</div>
+        <div class="menu__buttons" id="menu-buttons">
+          <button class="btn btn--play menu__btn" id="menu-play" type="button">OYNA</button>
+          <button class="btn btn--discard menu__btn" id="menu-newgame" type="button" style="display:none">YENİ OYUN</button>
+          <button class="btn btn--ink menu__btn" id="menu-howto" type="button">NASIL OYNANIR?</button>
+          <button class="btn btn--ink menu__btn" id="menu-settings" type="button">AYARLAR</button>
+        </div>
+        <div class="menu__foot">Mürekkep &amp; Parşömen sürümü</div>
+      </div>
+    </div>
+
+    <!-- ── Nasıl oynanır ── -->
+    <div class="overlay sheet-overlay" id="howto">
+      <div class="sheet">
+        <h2 class="sheet__title">Nasıl Oynanır?</h2>
+        <div class="sheet__body">
+          <section class="howto-block">
+            <h3>🎯 Amaç</h3>
+            <p>Her turun bir <b>hedef skoru</b> var. Harflerden kelime kurup bu hedefi
+            geç. Skorun = <span class="ink-chips">ÇİP</span> ×
+            <span class="ink-mult">ÇARPAN</span>.</p>
+          </section>
+          <section class="howto-block">
+            <h3>✍️ Kelime kurma</h3>
+            <p>Elindeki <b>8 harften</b> alana sürükleyerek kelime diz, <b>OYNA</b>'ya bas.
+            Kelime <b>Türkçe sözlükte</b> olmalı (en az 2 harf). <b>Uzun kelime</b> daha çok
+            çip + çarpan kademesi kazandırır.</p>
+          </section>
+          <section class="howto-block">
+            <h3>♻️ Hak &amp; Değişim</h3>
+            <p>Tur başına <b>4 kelime hakkın</b>, <b>3 değişim hakkın</b> var. Değiştir:
+            işine yaramayan harfleri seçip yenileriyle değiştir (kelime hakkı harcamaz).
+            <b>Kullanmadığın harfler elinde kalır</b> — strateji budur.</p>
+          </section>
+          <section class="howto-block">
+            <h3>⚠️ Patron Turları</h3>
+            <p>Her bölümün son turu bir <b>Patron</b>: yüksek hedefin yanında bir de
+            <b>özel kısıtlama</b> getirir (örn. en az 5 harf, aynı harf 2'den fazla yok,
+            değişim yok…). Kısıtlama sol üstte yazar — motorunu ona göre kur.</p>
+          </section>
+          <section class="howto-block">
+            <h3>🃏 Jokerler</h3>
+            <p>Skoru patlatan motor parçaları. <b>Soldan sağa</b> sırayla tetiklenir —
+            dizilim önemli. Dükkândan al, sürükleyerek sırala. Risk jokerleri (Palindrom
+            ×20, Harf Simyacısı…) büyük patlamalar yapar.</p>
+          </section>
+          <section class="howto-block">
+            <h3>🛒 Dükkân &amp; İlerleme</h3>
+            <p>Her <b>Bölüm</b> 3 turdan oluşur: <b>Tur 1 → Tur 2 → Patron</b>. Turu
+            geçince para kazanır, dükkândan joker/harf/kupon alırsın. Hedefi tutturamazsan
+            oyun biter — baştan başla, yeni bir motor kur.</p>
+          </section>
+        </div>
+        <button class="btn btn--play sheet__close" id="howto-close" type="button">Anladım</button>
+      </div>
+    </div>
+
+    <!-- ── Ayarlar ── -->
+    <div class="overlay sheet-overlay" id="settings">
+      <div class="sheet sheet--narrow">
+        <h2 class="sheet__title">Ayarlar</h2>
+        <div class="settings-list">
+          <div class="setting-row">
+            <span class="setting-row__label">Animasyon hızı</span>
+            <div class="seg" id="set-speed">
+              <button data-speed="0.6" type="button">Yavaş</button>
+              <button data-speed="1" class="seg--on" type="button">Normal</button>
+              <button data-speed="1.8" type="button">Hızlı</button>
+            </div>
+          </div>
+          <div class="setting-row">
+            <span class="setting-row__label">Ekran sarsıntısı</span>
+            <button class="toggle toggle--on" id="set-shake" type="button"><span></span></button>
+          </div>
+          <div class="setting-row">
+            <span class="setting-row__label">Parçacık efektleri</span>
+            <button class="toggle toggle--on" id="set-particles" type="button"><span></span></button>
+          </div>
+          <div class="setting-row setting-row--soon">
+            <span class="setting-row__label">Ses efektleri</span>
+            <span class="setting-row__soon">yakında</span>
+          </div>
+        </div>
+        <button class="btn btn--play sheet__close" id="settings-close" type="button">Kapat</button>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
