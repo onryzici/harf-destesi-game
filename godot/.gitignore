@@ -1,0 +1,6 @@
+# Godot 4 editör/import önbelleği (üretilir — commit'lenmez)
+.godot/
+
+# Geçici görsel doğrulama çıktısı (--capture)
+capture.png
+capture.png.import
